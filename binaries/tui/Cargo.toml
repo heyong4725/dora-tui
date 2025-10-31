@@ -1,0 +1,48 @@
+[package]
+name = "dora-tui"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85.0"
+license = "Apache-2.0"
+description = "Interactive terminal UI for the Dora runtime."
+publish = false
+
+[[bin]]
+name = "dora-tui"
+path = "src/main.rs"
+
+[features]
+default = ["protocol"]
+protocol = ["dep:dora-protocol-client", "tokio-stream"]
+tui-protocol-services = ["protocol"]
+tui-cli-services = []
+
+[dependencies]
+anyhow = "1.0"
+chrono = { workspace = true }
+clap = { version = "4.4", features = ["derive", "env"] }
+crossterm = "0.27"
+dirs = "5.0"
+futures = "0.3"
+humantime = "2.1"
+log = { version = "0.4", features = ["serde"] }
+once_cell = "1.18"
+ratatui = "0.27"
+serde = { workspace = true, features = ["derive"] }
+serde_json = { workspace = true }
+shell-words = "1.1"
+tokio = { workspace = true, features = ["macros", "rt-multi-thread", "sync", "time"] }
+tokio-stream = { workspace = true, optional = true }
+tracing = { workspace = true }
+uuid = { workspace = true }
+tui-interface = { path = "../../crates/tui-interface" }
+dora-protocol-client = { path = "../../crates/dora-protocol-client", optional = true }
+dora-protocol = { path = "../../libraries/protocol" }
+eyre = "0.6.8"
+sysinfo = "0.29"
+
+[dev-dependencies]
+serde = { workspace = true, features = ["derive"] }
+serde_json = { workspace = true }
+tokio = { workspace = true, features = ["macros", "rt-multi-thread"] }
+tui-interface = { path = "../../crates/tui-interface", features = ["test-utils"] }
